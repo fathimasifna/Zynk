@@ -20,6 +20,7 @@ class SplashScreen extends StatelessWidget {
     double imageWidth = MediaQuery.of(context).size.width * 1;
 
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,

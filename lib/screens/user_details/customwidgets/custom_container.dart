@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomContainer extends StatefulWidget {
   final String text;
 
-  CustomContainer({Key? key, required this.text}) : super(key: key);
+  const CustomContainer({Key? key, required this.text}) : super(key: key);
 
   @override
   _CustomContainerState createState() => _CustomContainerState();
@@ -21,14 +21,17 @@ class _CustomContainerState extends State<CustomContainer> {
         });
       },
       child: Padding(
-        padding: const EdgeInsets.only(top: 10,bottom: 20,left: 15,right: 5),
+        padding: const EdgeInsets.only(top: 10, bottom: 20, left: 15, right: 5),
         child: Container(
           height: 40,
           width: 100,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5.0),
             gradient: LinearGradient(
-              colors: [ Colors.red.withOpacity(0.6), Colors.red.withOpacity(0.6),],
+              colors: [
+                Colors.red.withOpacity(0.6),
+                Colors.red.withOpacity(0.6),
+              ],
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
             ),
@@ -40,7 +43,8 @@ class _CustomContainerState extends State<CustomContainer> {
               children: [
                 Text(
                   widget.text,
-                  style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 10, fontWeight: FontWeight.bold),
                 ),
                 if (isChecked)
                   const Icon(

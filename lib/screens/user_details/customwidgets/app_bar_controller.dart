@@ -7,26 +7,23 @@ class AppBarController extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      automaticallyImplyLeading: true,
-      title: Row(
-        children: [
-          Expanded(
-            child: Image.asset("assets/images/logo.png", height: 65),
-          ),
-          Expanded(
-            flex: 3,
-            child: Text(
-              "hello",
-              style: Theme.of(context).textTheme.titleLarge,
+      return AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        automaticallyImplyLeading: true,
+        iconTheme: IconThemeData(color: Colors.white), // Set the color of the back arrow
+        title: Row(
+          children: [
+            Center(
+              child: Expanded(
+                child: Image.asset("assets/images/logo.png", height: 120),
+              ),
             ),
-          ),
-        ],
-      ),
-     
-    );
+          
+          ],
+        ),
+      
+      );
   }
 
   @override

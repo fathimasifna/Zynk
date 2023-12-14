@@ -19,6 +19,7 @@ class _BiographyState extends State<Biography> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: const AppBarController(),
       body: SingleChildScrollView(
         child: Column(
@@ -32,6 +33,7 @@ class _BiographyState extends State<Biography> {
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w900,
+                    color: Colors.white
                   ),
                 ),
               ),
@@ -59,26 +61,27 @@ class _BiographyState extends State<Biography> {
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.w900,
+                  color: Colors.white
                 ),
               ),
             ),
             Row(
               children: [
-                CustomContainer(text: "music"),
-                CustomContainer(text: "music"),
+                CustomContainer(text: "Music"),
+                CustomContainer(text: "Travaling"),
+                CustomContainer(text: "Swimming"),
+              ],
+            ),
+            Row(
+              children: [
+                CustomContainer(text: "Dancing"),
+                CustomContainer(text: "Singing"),
                 CustomContainer(text: "music"),
               ],
             ),
             Row(
               children: [
-                CustomContainer(text: "music"),
-                CustomContainer(text: "music"),
-                CustomContainer(text: "music"),
-              ],
-            ),
-            Row(
-              children: [
-                CustomContainer(text: "music"),
+                CustomContainer(text: "music"), 
                 CustomContainer(text: "music"),
                 CustomContainer(text: "mqwertyuioqw"),
               ],

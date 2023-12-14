@@ -22,7 +22,7 @@ TextField TextCntroller(
       prefixIcon: Icon(icon, color: Colors.black),
       filled: true,
       floatingLabelBehavior: FloatingLabelBehavior.never,
-      fillColor: Colors.red.withOpacity(0.6),
+      fillColor: Colors.white,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(30.0),
         borderSide: const BorderSide(width: 0, style: BorderStyle.none),

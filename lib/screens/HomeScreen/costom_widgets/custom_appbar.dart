@@ -1,4 +1,5 @@
 import 'package:dating_app/screens/Profile/profile_page.dart';
+import 'package:dating_app/settings/settings_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -9,28 +10,24 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.black,
       elevation: 0,
       automaticallyImplyLeading: true,
+            iconTheme: IconThemeData(color: Colors.white), 
+
       title: Row(
         children: [
-          Expanded(
-            child: Image.asset("assets/images/logo.png", height: 65),
-          ),
-          Expanded(
-            flex: 3,
-            child: Text(
-              "hello", 
-              style: Theme.of(context).textTheme.titleLarge,
+          Padding(
+            padding: const EdgeInsets.only(left: 1),
+            child: Expanded(
+              child: Image.asset("assets/images/logo.png", height: 120),
             ),
           ),
         ],
       ),
       actions: [
         IconButton(
-          onPressed: () {
-            ProfilePage();
-          },
+          onPressed: () {},
           icon: Icon(
             Icons.message,
             color: Theme.of(context).primaryColor,
@@ -38,9 +35,29 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         IconButton(
           onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ProfilePage(),
+              ),
+            );
           },
           icon: Icon(
             Icons.person,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        IconButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SettingsPage(),
+              ),
+            );
+          },
+          icon: Icon(
+            Icons.settings,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -49,5 +66,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(56.0);
+  Size get preferredSize => const Size.fromHeight(56.0);
 }

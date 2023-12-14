@@ -18,6 +18,7 @@ class _ImageAddPageState extends State<ImageAddPage> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Colors.black54,
       appBar: const AppBarController(),
       body: Form(
         key: _formKey,
@@ -31,6 +32,7 @@ class _ImageAddPageState extends State<ImageAddPage> {
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.w900,
+                  color: Colors.white
                 ),
               ),
             ),

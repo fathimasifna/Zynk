@@ -3,14 +3,13 @@ import 'package:dating_app/screens/user_details/customwidgets/text_edit_controll
 import 'package:dating_app/screens/user_details/screens/gender_adding_page.dart';
 import 'package:flutter/material.dart';
 
-
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
 }
-  
+
 class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
@@ -21,12 +20,13 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.black,
         elevation: 0,
         title: const Text(
           "Sign Up",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
         ),
+        iconTheme: IconThemeData(color: Colors.white), // Set the color of the back arrow
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -34,68 +34,65 @@ class _SignUpPageState extends State<SignUpPage> {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-               Color.fromARGB(255, 228, 144, 138),
-              Color.fromARGB(255, 228, 144, 138),
+              Colors.black,
+              Colors.black,
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
         child: SingleChildScrollView(
-            child: Padding(
-          padding: EdgeInsets.fromLTRB(
-            20,
-            MediaQuery.of(context).size.height * 0.2,
-            20,
-            0,
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(
+              20,
+              MediaQuery.of(context).size.height * 0.2,
+              20,
+              0,
+            ),
+            child: Column(
+              children: <Widget>[
+                const SizedBox(
+                  height: 20,
+                ),
+                TextCntroller(
+                  "Enter User Name",
+                  Icons.person_outlined,
+                  false,
+                  _usernameTextController,
+                  TextInputType.name,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextCntroller(
+                  "Enter Email-id",
+                  Icons.mail,
+                  true,
+                  _emailTextController,
+                  TextInputType.emailAddress,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextCntroller(
+                  "Enter Password",
+                  Icons.lock_outlined,
+                  true,
+                  _passwordTextController,
+                  TextInputType.number,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                signInSignUpButton(context, false, () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const GenderAddingPage()));
+                })
+              ],
+            ),
           ),
-          child: Column(
-            children: <Widget>[
-              const SizedBox(
-                height: 20,
-              ),
-              TextCntroller(
-                "Enter User Name",
-                Icons.person_outlined,
-                false,
-                _usernameTextController,
-                              TextInputType.name
-
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextCntroller(
-                "Enter Email-id",
-                Icons.mail,
-                true,
-                _emailTextController,
-                              TextInputType.emailAddress
-
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextCntroller(
-                "Enter Password",
-                Icons.lock_outlined,
-                true,
-                _passwordTextController,
-                                              TextInputType.number
-
-              ),
-               const SizedBox(
-                height: 20,
-              ),
-             
-              signInSignUpButton(context, false, () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const GenderAddingPage()));
-              })
-            
-            ],
-          ),
-        )),
+        ),
       ),
     );
   }

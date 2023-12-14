@@ -21,6 +21,7 @@ class _GenderAddingPageState extends State<GenderAddingPage> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: const AppBarController(),
       body: SingleChildScrollView(
         child: Container(
@@ -36,11 +37,12 @@ class _GenderAddingPageState extends State<GenderAddingPage> {
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w900,
+                    color: Colors.white
                   ),
                 ),
               ),
               const SizedBox(height: 20),
-                        buildRadioGroup("", ["Male", "Female", "Other"]),
+                        buildRadioGroup("", ["Male", "Female", "Other",]),
       
               const Padding(
                 padding: EdgeInsets.only(right: 120),
@@ -49,6 +51,7 @@ class _GenderAddingPageState extends State<GenderAddingPage> {
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w900,
+                    color: Colors.white
                   ),
                 ),
               ),
@@ -98,6 +101,7 @@ class _GenderAddingPageState extends State<GenderAddingPage> {
           style: TextStyle(
             fontSize: MediaQuery.of(context).size.width * 0.1,
             fontWeight: FontWeight.w900,
+            color: Colors.white
           ),
         ),
         const SizedBox(height: 10),

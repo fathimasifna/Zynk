@@ -18,14 +18,24 @@ class _LoginPageState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   backgroundColor: Colors.black,
+      //   elevation: 0,
+      //   title: const Text(
+      //     "Sign In",
+      //     style: TextStyle(
+      //         fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+      //   ),
+      //   iconTheme: IconThemeData(color: Colors.white),
+      // ),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color.fromARGB(255, 228, 144, 138),
-              Color.fromARGB(255, 228, 144, 138),
+              Colors.black,
+              Colors.black,
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -49,7 +59,7 @@ class _LoginPageState extends State<SignIn> {
                   Icons.person_outlined,
                   false,
                   _emailTextController,
-                  TextInputType.emailAddress
+                  TextInputType.emailAddress,
                 ),
                 const SizedBox(
                   height: 20,
@@ -59,16 +69,18 @@ class _LoginPageState extends State<SignIn> {
                   Icons.lock_outlined,
                   true,
                   _passwordTextController,
-                  TextInputType.number
+                  TextInputType.number,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 signInSignUpButton(context, true, () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomeScreen(),
+                    ),
+                  );
                 }),
                 const SizedBox(
                   height: 20,
