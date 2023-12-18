@@ -4,6 +4,7 @@ class TitleWithIcon extends StatelessWidget {
   final String text;
   final IconData icon;
 
+
   const TitleWithIcon({
     super.key,
     required this.text,

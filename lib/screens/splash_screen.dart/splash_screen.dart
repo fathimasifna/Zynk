@@ -2,11 +2,13 @@ import 'package:dating_app/screens/on_bodyscreen/start_page.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
+  // ignore: use_key_in_widget_constructors
   const SplashScreen({Key? key});
 
   _navigateToHome(BuildContext context) async {
     await Future.delayed(const Duration(seconds: 3));
 
+    // ignore: use_build_context_synchronously
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const BodyScreen()),

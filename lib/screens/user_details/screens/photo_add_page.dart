@@ -25,8 +25,8 @@ class _ImageAddPageState extends State<ImageAddPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 220),
+            const Padding(
+              padding: EdgeInsets.only(right: 220),
               child: Text(
                 "add photo",
                 style: TextStyle(

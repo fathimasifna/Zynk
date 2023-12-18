@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:dating_app/screens/Profile/controller/title_with_icon.dart';
 import 'package:dating_app/screens/user_details/customwidgets/custom_container.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +14,7 @@ class ProfilePage extends StatelessWidget {
         backgroundColor: Colors.black,
         elevation: 0,
         automaticallyImplyLeading: true,
-        iconTheme: IconThemeData(color: Colors.white), 
+        iconTheme: const IconThemeData(color: Colors.white), 
         title: Row(
           children: [
             Padding(
@@ -21,7 +23,7 @@ class ProfilePage extends StatelessWidget {
                 child: Image.asset("assets/images/logo.png", height: 120),
               ),
             ),
-            Expanded(
+            const Expanded(
               flex: 3,
               child: Text(
                 "Profile",
@@ -101,7 +103,7 @@ class ProfilePage extends StatelessWidget {
                   const TitleWithIcon(text: 'Location', icon: Icons.edit),
                   const Text("sdfghjkjhgfdfghjkjhgfdfghcuhybxj"),
                   const TitleWithIcon(text: 'Interests', icon: Icons.edit),
-                  Column(
+                  const Column(
                     children: [
                       Row(
                         children: [

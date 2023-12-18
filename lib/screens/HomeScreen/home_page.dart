@@ -1,17 +1,24 @@
 import 'package:dating_app/screens/HomeScreen/costom_widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+// ignore: must_be_immutable
+class HomeScreen extends StatefulWidget {
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-        backgroundColor: Colors.black,
-        appBar: CustomAppBar(),
-        body: Text(
-          "rtyui",
-          style: TextStyle(color: Colors.amber),
-        ));
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: CustomAppBar(),
+      body: ListView(
+        children: [
+        ],
+      ),
+    );
   }
 }

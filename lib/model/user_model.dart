@@ -1,20 +1,18 @@
-class User {
-  final int id;
-  final String name;
-  final int age;
-  final List<String> imageUrls;
-  final String bio;
-  final String jobTitle;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-  User({
-    required this.id,
-    required this.name,
-    required this.age,
-    required this.imageUrls,
-    required this.bio,
-    required this.jobTitle,
-  });
+class UserModel {
+  String? id;
+  String? username;
 
-  List<Object?> get props => [id, name, age, imageUrls, bio, jobTitle];
-  
+  String? email;
+  UserModel({this.email, this.id, this.username});
+  factory UserModel.fromMap(DocumentSnapshot map) {
+    return UserModel(
+        email: map["email"], username: map["username"], id: map.id);
+  }
+  Map<String, dynamic> toMap() {
+    return {
+      //"id": id, 
+    "email": email, "username": username};
+  }
 }

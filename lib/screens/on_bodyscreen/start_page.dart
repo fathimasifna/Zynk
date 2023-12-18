@@ -31,7 +31,6 @@ class _BodyScreenState extends State<BodyScreen> {
   @override
   Widget build(BuildContext context) {
     double imageWidth = calculateImageWidth(context);
-    double textFontSize = calculateTextFontSize(context);
     double textPadding = calculateTextPadding(context);
 
     return Scaffold(
@@ -47,7 +46,7 @@ class _BodyScreenState extends State<BodyScreen> {
         children: [
           // Page 1
           Container(
-            color: Colors.black, // Set background color for this page
+            color: Colors.black, 
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -55,7 +54,7 @@ class _BodyScreenState extends State<BodyScreen> {
                   "assets/images/logo.png",
                   width: imageWidth,
                 ),
-                Text(
+                const Text(
                   ".....",
                   style: TextStyle(color: Colors.white),
                 ),
@@ -63,8 +62,8 @@ class _BodyScreenState extends State<BodyScreen> {
                   padding: EdgeInsets.symmetric(
                       horizontal: textPadding, vertical: 30),
                   child: const Text(
-                    "Welcome to ......,Let's Connect",
-                    style: TextStyle(color: Colors.white),
+                    "Welcome to Zynk,Let's Connect",
+                    style: TextStyle(color: Colors.white,fontSize: 19),
                   ),
                 ),
                 row(),
@@ -73,7 +72,7 @@ class _BodyScreenState extends State<BodyScreen> {
           ),
           // Page 2
           Container(
-            color: Colors.black, // Set background color for this page
+            color: Colors.black, 
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -81,7 +80,7 @@ class _BodyScreenState extends State<BodyScreen> {
                   "assets/images/logo.png",
                   width: imageWidth,
                 ),
-                Text(
+                const Text(
                   "....",
                   style: TextStyle(color: Colors.white),
                 ),
@@ -89,8 +88,8 @@ class _BodyScreenState extends State<BodyScreen> {
                   padding: EdgeInsets.symmetric(
                       horizontal: textPadding, vertical: 30),
                   child: const Text(
-                    "We assist individuals in purchasing rented dresses.",
-                    style: TextStyle(color: Colors.white),
+                    "Meet and enjoy yourselves with pleasure,🥰🥰",
+                    style: TextStyle(color: Colors.white,fontSize: 19),
                   ),
                 ),
                 row(),
@@ -100,7 +99,7 @@ class _BodyScreenState extends State<BodyScreen> {
         ],
       ),
      bottomNavigationBar: BottomAppBar(
-  color: Colors.black, // Set background color for BottomAppBar
+  color: Colors.black,  
   child: SizedBox(
     height: 50.0,
     child: Row(
@@ -114,7 +113,7 @@ class _BodyScreenState extends State<BodyScreen> {
             );
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.black12,
             elevation: 0,
           ),
           child: const Text(
@@ -122,7 +121,7 @@ class _BodyScreenState extends State<BodyScreen> {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.red,
+              color: Color.fromARGB(255, 214, 53, 107),
             ),
           ),
         ),
@@ -142,7 +141,7 @@ class _BodyScreenState extends State<BodyScreen> {
         (index) => Padding(
           padding: const EdgeInsets.all(8.0),
           child: currentPage == index
-              ? const Icon(Icons.circle, size: 20, color: Colors.red)
+              ? const Icon(Icons.circle, size: 20, color:Color.fromARGB(255, 241, 53, 115),)
               : const Icon(Icons.circle_outlined, size: 16, color: Colors.white),
         ),
       ),

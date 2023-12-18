@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:dating_app/screens/user_details/customwidgets/RadioGroup.dart';
 import 'package:dating_app/screens/user_details/customwidgets/app_bar_controller.dart';
 import 'package:dating_app/screens/user_details/screens/photo_add_page.dart';
@@ -42,7 +44,7 @@ class _GenderAddingPageState extends State<GenderAddingPage> {
                 ),
               ),
               const SizedBox(height: 20),
-                        buildRadioGroup("", ["Male", "Female", "Other",]),
+                        buildRadioGroup("", ["Male", "Female", "Other"]),
       
               const Padding(
                 padding: EdgeInsets.only(right: 120),
@@ -102,7 +104,7 @@ class _GenderAddingPageState extends State<GenderAddingPage> {
             fontSize: MediaQuery.of(context).size.width * 0.1,
             fontWeight: FontWeight.w900,
             color: Colors.white
-          ),
+            ),
         ),
         const SizedBox(height: 10),
         Column(

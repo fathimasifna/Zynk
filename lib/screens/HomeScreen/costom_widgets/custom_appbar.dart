@@ -1,5 +1,5 @@
 import 'package:dating_app/screens/Profile/profile_page.dart';
-import 'package:dating_app/settings/settings_page.dart';
+import 'package:dating_app/screens/settings/settings_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -12,15 +12,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.black,
       elevation: 0,
-      automaticallyImplyLeading: true,
-            iconTheme: IconThemeData(color: Colors.white), 
-
+      automaticallyImplyLeading: false,
+      iconTheme: const IconThemeData(color: Colors.white),
       title: Row(
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 1),
             child: Expanded(
-              child: Image.asset("assets/images/logo.png", height: 120),
+                child: Image.asset("assets/images/logo.png", height: 120),
             ),
           ),
         ],
@@ -52,7 +51,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const SettingsPage(),
+                builder: (context) =>  SettingsPage(),
               ),
             );
           },

@@ -11,7 +11,7 @@ class AppBarController extends StatelessWidget implements PreferredSizeWidget {
         backgroundColor: Colors.black,
         elevation: 0,
         automaticallyImplyLeading: true,
-        iconTheme: IconThemeData(color: Colors.white), // Set the color of the back arrow
+        iconTheme: const IconThemeData(color: Colors.white), 
         title: Row(
           children: [
             Center(

@@ -1,42 +1,41 @@
-import 'package:dating_app/screens/HomeScreen/home_page.dart';
-import 'package:dating_app/screens/login_page/controller/signin_up_controller.dart';
+import 'package:dating_app/cntroller/auth_controller.dart';
+import 'package:dating_app/screens/login_page/forgot_password_page.dart';
+import 'package:dating_app/screens/login_page/sigin_with_google.dart';
 import 'package:dating_app/screens/login_page/signup_page.dart';
-import 'package:dating_app/screens/user_details/customwidgets/text_edit_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({Key? key});
+  const SignIn({Key? key}) : super(key: key);
 
   @override
   State<SignIn> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<SignIn> {
-  final TextEditingController _passwordTextController = TextEditingController();
-  final TextEditingController _emailTextController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _isPasswordVisible = false;
+  final controller = Get.put(AuthController());
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  @override
+  void dispose() {
+    controller.loginPassword.dispose();
+    controller.loginemail.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.black,
-      //   elevation: 0,
-      //   title: const Text(
-      //     "Sign In",
-      //     style: TextStyle(
-      //         fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-      //   ),
-      //   iconTheme: IconThemeData(color: Colors.white),
-      // ),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Colors.black,
-              Colors.black,
-            ],
+            colors: [Colors.black, Colors.black45],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -49,44 +48,153 @@ class _LoginPageState extends State<SignIn> {
               20,
               0,
             ),
-            child: Column(
-              children: <Widget>[
-                const SizedBox(
-                  height: 30,
-                ),
-                TextCntroller(
-                  "Enter User Name",
-                  Icons.person_outlined,
-                  false,
-                  _emailTextController,
-                  TextInputType.emailAddress,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextCntroller(
-                  "Enter Password",
-                  Icons.lock_outlined,
-                  true,
-                  _passwordTextController,
-                  TextInputType.number,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                signInSignUpButton(context, true, () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomeScreen(),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  Image.asset(
+                    "assets/images/logo.png",
+                    width: 160,
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: controller.loginemail,
+                    cursorColor: Colors.black,
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(0.9),
                     ),
-                  );
-                }),
-                const SizedBox(
-                  height: 20,
-                ),
-                signUpOption(),
-              ],
+                    decoration: InputDecoration(
+                      labelText: 'Enter Email-id',
+                      prefixIcon: const Icon(Icons.mail),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide:
+                            const BorderSide(width: 0, style: BorderStyle.none),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null ||
+                          !RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+                              .hasMatch(value)) {
+                        return 'Please enter a valid email address';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    controller: controller.loginPassword,
+                    obscureText: !_isPasswordVisible,
+                    cursorColor: Colors.black,
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(0.9),
+                    ),
+                    decoration: InputDecoration(
+                      labelText: 'Enter Password',
+                      prefixIcon: const Icon(Icons.lock),
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                        child: Icon(
+                          _isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Colors.black.withOpacity(0.9),
+                        ),
+                      ),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide:
+                            const BorderSide(width: 0, style: BorderStyle.none),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.length < 6) {
+                        return 'Password must be 6 or more characters';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 170),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ForgotPasswordPage()),
+                        );
+                      },
+                      child: const Text(
+                        " Forgot Password?",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Obx(
+                    () => Container(
+                      height: 50,
+                      width: 2000,
+                      margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(90),
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          controller.signIn();
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith((states) {
+                            if (states.contains(MaterialState.pressed)) {
+                              return Colors.black26;
+                            }
+                            return Colors.white;
+                          }),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                          ),
+                        ),
+                        child: controller.loading.value
+                            ? const CircularProgressIndicator(
+                                color: Colors.black,
+                              )
+                            : const Text(
+                                "LOG IN",
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  signUpOption(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SignInButton(Buttons.google, onPressed: () {
+                    handleSignIn();
+                  })
+                ],
+              ),
             ),
           ),
         ),
@@ -106,7 +214,7 @@ class _LoginPageState extends State<SignIn> {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const SignUpPage()),
+              MaterialPageRoute(builder: (context) => SignUpPage()),
             );
           },
           child: const Text(

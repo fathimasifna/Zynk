@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 // import 'package:dating_app/screens/user_details/customwidgets/app_bar_controller.dart';
 // import 'package:dating_app/screens/user_details/screens/gender_adding_page.dart';
 // import 'package:dating_app/screens/user_details/customwidgets/text_edit_controller.dart';

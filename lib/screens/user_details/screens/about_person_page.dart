@@ -65,28 +65,28 @@ class _BiographyState extends State<Biography> {
                 ),
               ),
             ),
-            Row(
+            const Row(
               children: [
                 CustomContainer(text: "Music"),
                 CustomContainer(text: "Travaling"),
                 CustomContainer(text: "Swimming"),
               ],
             ),
-            Row(
+            const Row(
               children: [
                 CustomContainer(text: "Dancing"),
                 CustomContainer(text: "Singing"),
                 CustomContainer(text: "music"),
               ],
             ),
-            Row(
+            const Row(
               children: [
                 CustomContainer(text: "music"), 
                 CustomContainer(text: "music"),
                 CustomContainer(text: "mqwertyuioqw"),
               ],
             ),
-             Row(
+             const Row(
               children: [
                 CustomContainer(text: "music"),
                 CustomContainer(text: "music"),
@@ -101,7 +101,7 @@ class _BiographyState extends State<Biography> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const HomeScreen(),
+                    builder: (context) =>  HomeScreen(),
                   ),
                 );
               },

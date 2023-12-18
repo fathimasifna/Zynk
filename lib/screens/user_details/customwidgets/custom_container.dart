@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 class CustomContainer extends StatefulWidget {
@@ -29,8 +31,8 @@ class _CustomContainerState extends State<CustomContainer> {
             borderRadius: BorderRadius.circular(5.0),
             gradient: LinearGradient(
               colors: [
-                Colors.red.withOpacity(0.6),
-                Colors.red.withOpacity(0.6),
+                Colors.white,
+                Colors.white.withOpacity(0.6),
               ],
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
