@@ -4,14 +4,9 @@ import 'package:dating_app/screens/user_details/customwidgets/custom_container.d
 import 'package:dating_app/screens/user_details/customwidgets/text_edit_controller.dart';
 import 'package:flutter/material.dart';
 
-class Biography extends StatefulWidget {
-  const Biography({super.key});
+class Biography extends StatelessWidget {
+   Biography({super.key});
 
-  @override
-  State<Biography> createState() => _BiographyState();
-}
-
-class _BiographyState extends State<Biography> {
   final TextEditingController _aboutController = TextEditingController();
 
   @override

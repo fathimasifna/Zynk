@@ -1,35 +1,36 @@
-import 'package:dating_app/cntroller/auth_controller.dart';
-import 'package:dating_app/screens/login_page/forgot_password_page.dart';
-import 'package:dating_app/screens/login_page/sigin_with_google.dart';
-import 'package:dating_app/screens/login_page/signup_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:dating_app/screens/login_page/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sign_in_button/sign_in_button.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
-  State<SignIn> createState() => _LoginPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<SignIn> {
+class _SignUpPageState extends State<SignUpPage> {
+  final controller = Get.put(AuthController());
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
-  final controller = Get.put(AuthController());
-  final FirebaseAuth auth = FirebaseAuth.instance;
-
-  @override
-  void dispose() {
-    controller.loginPassword.dispose();
-    controller.loginemail.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        title: const Text(
+          "Sign Up",
+          style: TextStyle(
+              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -52,13 +53,37 @@ class _LoginPageState extends State<SignIn> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  Image.asset(
-                    "assets/images/logo.png",
-                    width: 160,
-                  ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 20),
                   TextFormField(
-                    controller: controller.loginemail,
+                    controller: controller.username,
+                    cursorColor: Colors.black,
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(0.9),
+                    ),
+                    decoration: InputDecoration(
+                      labelText: 'Enter User name',
+                      prefixIcon: const Icon(Icons.person),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide:
+                            const BorderSide(width: 0, style: BorderStyle.none),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Please enter a username';
+                      } else if (value.contains(' ')) {
+                        return 'Username cannot contain white spaces';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    controller: controller.email,
                     cursorColor: Colors.black,
                     style: TextStyle(
                       color: Colors.black.withOpacity(0.9),
@@ -86,7 +111,7 @@ class _LoginPageState extends State<SignIn> {
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
-                    controller: controller.loginPassword,
+                    controller: controller.password,
                     obscureText: !_isPasswordVisible,
                     cursorColor: Colors.black,
                     style: TextStyle(
@@ -124,30 +149,10 @@ class _LoginPageState extends State<SignIn> {
                       return null;
                     },
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 170),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ForgotPasswordPage()),
-                        );
-                      },
-                      child: const Text(
-                        " Forgot Password?",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Obx(
-                    () => Container(
-                      height: 50,
+                  const SizedBox(height: 20),
+                  Obx(()=>
+                    Container(
+                      height: 55,
                       width: 2000,
                       margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                       decoration: BoxDecoration(
@@ -155,7 +160,7 @@ class _LoginPageState extends State<SignIn> {
                       ),
                       child: ElevatedButton(
                         onPressed: () {
-                          controller.signIn();
+                          controller.signUp();
                         },
                         style: ButtonStyle(
                           backgroundColor:
@@ -167,62 +172,27 @@ class _LoginPageState extends State<SignIn> {
                           }),
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
                           ),
                         ),
-                        child: controller.loading.value
-                            ? const CircularProgressIndicator(
-                                color: Colors.black,
-                              )
-                            : const Text(
-                                "LOG IN",
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
+                        child:controller.loading.value?const CircularProgressIndicator(color: Colors.black,): const Text(
+                          "SIGN UP",
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  signUpOption(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SignInButton(Buttons.google, onPressed: () {
-                    handleSignIn();
-                  })
                 ],
               ),
             ),
           ),
         ),
       ),
-    );
-  }
-
-  Row signUpOption() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text(
-          "Don't have an account?",
-          style: TextStyle(color: Colors.white),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SignUpPage()),
-            );
-          },
-          child: const Text(
-            " Sign Up",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-        ),
-      ],
     );
   }
 }

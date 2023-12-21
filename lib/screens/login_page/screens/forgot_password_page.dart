@@ -1,4 +1,4 @@
-import 'package:dating_app/cntroller/auth_controller.dart';
+import 'package:dating_app/screens/login_page/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,7 +8,7 @@ class ForgotPasswordPage extends StatefulWidget {
   @override
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
-
+  
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final controller = Get.put(AuthController());
 
@@ -65,16 +65,20 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 },
               ),
               const SizedBox(height: 20.0),
-              Obx(()=>
-                 ElevatedButton(
-                   onPressed: () {
-                     controller.restPassword();
-                   },
-                   child: controller.loading.value?const CircularProgressIndicator(color: Colors.black,): const Text(
-                     'Reset Password',
-                     style: TextStyle(color: Colors.black),
-                   ),
-                 ),
+              Obx(
+                () => ElevatedButton(
+                  onPressed: () {
+                    controller.resetPassword();
+                  },
+                  child: controller.loading.value
+                      ? const CircularProgressIndicator(
+                          color: Colors.black,
+                        )
+                      : const Text(
+                          'Reset Password',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                ),
               ),
             ],
           ),

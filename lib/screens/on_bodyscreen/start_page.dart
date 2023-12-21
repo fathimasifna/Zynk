@@ -1,6 +1,4 @@
-// ... (your imports and other code)
-
-import 'package:dating_app/screens/login_page/signin_page.dart';
+import 'package:dating_app/screens/login_page/screens/signin_page.dart';
 import 'package:flutter/material.dart';
 
 class BodyScreen extends StatefulWidget {
@@ -16,11 +14,6 @@ class _BodyScreenState extends State<BodyScreen> {
   double calculateImageWidth(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return screenWidth * 0.50;
-  }
-
-  double calculateTextFontSize(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    return screenWidth * 0.2;
   }
 
   double calculateTextPadding(BuildContext context) {
@@ -46,7 +39,7 @@ class _BodyScreenState extends State<BodyScreen> {
         children: [
           // Page 1
           Container(
-            color: Colors.black, 
+            color: Colors.black,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -129,7 +122,6 @@ class _BodyScreenState extends State<BodyScreen> {
     ),
   ),
 ),
-
     );
   }
 

@@ -1,24 +1,39 @@
+import 'package:dating_app/screens/HomeScreen/home_page.dart';
 import 'package:dating_app/screens/on_bodyscreen/start_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class SplashScreen extends StatelessWidget {
-  // ignore: use_key_in_widget_constructors
+class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key});
 
-  _navigateToHome(BuildContext context) async {
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  _navigateToDestination() async {
     await Future.delayed(const Duration(seconds: 3));
 
-    // ignore: use_build_context_synchronously
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const BodyScreen()),
-    );
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (context.mounted) {
+      if (user != null) {
+        Get.offAll(() =>  HomeScreen());
+      } else {
+        Get.offAll(() => const BodyScreen());
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _navigateToDestination();
   }
 
   @override
   Widget build(BuildContext context) {
-    _navigateToHome(context);
-
     double imageWidth = MediaQuery.of(context).size.width * 1;
 
     return Scaffold(

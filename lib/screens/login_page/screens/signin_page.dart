@@ -1,36 +1,26 @@
-
+import 'package:dating_app/screens/login_page/controller/auth_controller.dart';
+import 'package:dating_app/screens/login_page/screens/forgot_password_page.dart';
+import 'package:dating_app/screens/login_page/screens/signup_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 
-import '../../cntroller/auth_controller.dart';
-
-class SignUpPage extends StatefulWidget {
-  SignUpPage({Key? key}) : super(key: key);
+class SignIn extends StatefulWidget {
+  const SignIn({Key? key}) : super(key: key);
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<SignIn> createState() => _LoginPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
-  final controller = Get.put(AuthController());
-
+class _LoginPageState extends State<SignIn> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
+  final controller = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        elevation: 0,
-        title: const Text(
-          "Sign Up",
-          style: TextStyle(
-              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -53,37 +43,13 @@ class _SignUpPageState extends State<SignUpPage> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    controller: controller.username,
-                    cursorColor: Colors.black,
-                    style: TextStyle(
-                      color: Colors.black.withOpacity(0.9),
-                    ),
-                    decoration: InputDecoration(
-                      labelText: 'Enter User name',
-                      prefixIcon: const Icon(Icons.person),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide:
-                            const BorderSide(width: 0, style: BorderStyle.none),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return 'Please enter a username';
-                      } else if (value.contains(' ')) {
-                        return 'Username cannot contain white spaces';
-                      }
-                      return null;
-                    },
+                  Image.asset(
+                    "assets/images/logo.png",
+                    width: 160,
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   TextFormField(
-                    controller: controller.email,
+                    controller: controller.loginemail,
                     cursorColor: Colors.black,
                     style: TextStyle(
                       color: Colors.black.withOpacity(0.9),
@@ -111,7 +77,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
-                    controller: controller.password,
+                    controller: controller.loginPassword,
                     obscureText: !_isPasswordVisible,
                     cursorColor: Colors.black,
                     style: TextStyle(
@@ -149,10 +115,26 @@ class _SignUpPageState extends State<SignUpPage> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 20),
-                  Obx(()=>
-                    Container(
-                      height: 55,
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 170),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(() => const ForgotPasswordPage());
+                      },
+                      child: const Text(
+                        " Forgot Password?",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Obx(
+                    () => Container(
+                      height: 50,
                       width: 2000,
                       margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                       decoration: BoxDecoration(
@@ -160,7 +142,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       child: ElevatedButton(
                         onPressed: () {
-                          controller.signUp();
+                          controller.signIn();
                         },
                         style: ButtonStyle(
                           backgroundColor:
@@ -172,27 +154,60 @@ class _SignUpPageState extends State<SignUpPage> {
                           }),
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
+                                borderRadius: BorderRadius.circular(30)),
                           ),
                         ),
-                        child:controller.loading.value?const CircularProgressIndicator(color: Colors.black,): const Text(
-                          "SIGN UP",
-                          style: TextStyle(
-                            color: Colors.black87,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
+                        child: controller.loading.value
+                            ? const CircularProgressIndicator(
+                                color: Colors.black,
+                              )
+                            : const Text(
+                                "LOG IN",
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
                       ),
                     ),
                   ),
+                  const SizedBox(height: 20),
+                  signUpOption(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SignInButton(Buttons.google, onPressed: ()async {
+                    await controller.signInWithGoogle();
+
+                  })
                 ],
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Row signUpOption() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text(
+          "Don't have an account?",
+          style: TextStyle(color: Colors.white),
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const SignUpPage());
+          },
+          child: const Text(
+            " Sign Up",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
     );
   }
 }

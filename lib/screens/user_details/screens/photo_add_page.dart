@@ -3,14 +3,9 @@ import 'package:dating_app/screens/user_details/customwidgets/custom_image_widge
 import 'package:dating_app/screens/user_details/screens/about_person_page.dart';
 import 'package:flutter/material.dart';
 
-class ImageAddPage extends StatefulWidget {
-  const ImageAddPage({super.key});
+class ImageAddPage extends StatelessWidget {
+   ImageAddPage({super.key});
 
-  @override
-  State<ImageAddPage> createState() => _ImageAddPageState();
-}
-
-class _ImageAddPageState extends State<ImageAddPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -69,7 +64,7 @@ class _ImageAddPageState extends State<ImageAddPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Biography(),
+                      builder: (context) =>  Biography(),
                     ),
                   );
                 }

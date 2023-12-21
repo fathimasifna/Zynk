@@ -63,7 +63,7 @@ class SettingsPage extends StatelessWidget {
           TextButton(
             onPressed: ()async {
          await     
-              Get.offAll(()=>const BodyScreen());
+              Get.offAll(()=> const BodyScreen());
             },
             child: const Text(
               "Log Out",

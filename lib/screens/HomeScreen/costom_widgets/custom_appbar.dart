@@ -1,6 +1,7 @@
 import 'package:dating_app/screens/Profile/profile_page.dart';
 import 'package:dating_app/screens/settings/settings_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
@@ -34,12 +35,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         IconButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const ProfilePage(),
-              ),
-            );
+                 Get.to(() => ProfilePage());
+
           },
           icon: Icon(
             Icons.person,
@@ -48,12 +45,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         IconButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>  SettingsPage(),
-              ),
-            );
+                Get.to(() => SettingsPage());
+
           },
           icon: Icon(
             Icons.settings,

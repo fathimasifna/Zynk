@@ -72,7 +72,7 @@ class _GenderAddingPageState extends State<GenderAddingPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ImageAddPage(),
+                        builder: (context) =>  ImageAddPage(),
                       ),
                     );
                   },
