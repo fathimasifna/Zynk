@@ -1,8 +1,7 @@
-
-import 'package:dating_app/screens/login_page/controller/auth_controller.dart';
+import 'package:dating_app/screens/login_page/controller/auth_controller/auth_controller.dart';
+import 'package:dating_app/screens/login_page/controller/firestore_controller/firestore_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -13,6 +12,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final controller = Get.put(AuthController());
+ 
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
@@ -150,8 +150,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  Obx(()=>
-                    Container(
+                  Obx(
+                    () => Container(
                       height: 55,
                       width: 2000,
                       margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
@@ -159,8 +159,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         borderRadius: BorderRadius.circular(90),
                       ),
                       child: ElevatedButton(
-                        onPressed: () {
-                          controller.signUp();
+                        onPressed: () async {
+                          await controller.signUp();
+                          addData();
                         },
                         style: ButtonStyle(
                           backgroundColor:
@@ -176,14 +177,18 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                           ),
                         ),
-                        child:controller.loading.value?const CircularProgressIndicator(color: Colors.black,): const Text(
-                          "SIGN UP",
-                          style: TextStyle(
-                            color: Colors.black87,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
+                        child: controller.loading.value
+                            ? const CircularProgressIndicator(
+                                color: Colors.black,
+                              )
+                            : const Text(
+                                "SIGN UP",
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
                       ),
                     ),
                   ),

@@ -1,7 +1,6 @@
-import 'package:dating_app/screens/login_page/controller/auth_controller.dart';
+import 'package:dating_app/screens/login_page/controller/auth_controller/auth_controller.dart';
 import 'package:dating_app/screens/login_page/screens/forgot_password_page.dart';
 import 'package:dating_app/screens/login_page/screens/signup_page.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sign_in_button/sign_in_button.dart';
@@ -178,7 +177,7 @@ class _LoginPageState extends State<SignIn> {
                     height: 20,
                   ),
                   SignInButton(Buttons.google, onPressed: ()async {
-                    await controller.signInWithGoogle();
+                    controller.signInWithGoogle();
 
                   })
                 ],

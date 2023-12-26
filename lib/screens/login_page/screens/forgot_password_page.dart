@@ -1,4 +1,4 @@
-import 'package:dating_app/screens/login_page/controller/auth_controller.dart';
+import 'package:dating_app/screens/login_page/controller/auth_controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -59,7 +59,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   if (value == null ||
                       !RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
                           .hasMatch(value)) {
-                    print('Please enter a valid email address');
+                    ('Please enter a valid email address');
                   }
                   return null;
                 },

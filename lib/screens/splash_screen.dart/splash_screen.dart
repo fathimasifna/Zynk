@@ -1,4 +1,4 @@
-import 'package:dating_app/screens/HomeScreen/home_page.dart';
+import 'package:dating_app/screens/bottomnavigation/bottomnavigation.dart';
 import 'package:dating_app/screens/on_bodyscreen/start_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (context.mounted) {
       if (user != null) {
-        Get.offAll(() =>  HomeScreen());
+        Get.offAll(() => BottomNavigation());
       } else {
         Get.offAll(() => const BodyScreen());
       }

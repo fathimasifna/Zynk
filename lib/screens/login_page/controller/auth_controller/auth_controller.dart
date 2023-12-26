@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dating_app/model/user_model.dart';
 import 'package:dating_app/screens/HomeScreen/home_page.dart';
+import 'package:dating_app/screens/bottomnavigation/bottomnavigation.dart';
+import 'package:dating_app/screens/login_page/controller/model/model.dart';
 import 'package:dating_app/screens/login_page/screens/signin_page.dart';
-import 'package:dating_app/screens/user_details/screens/gender_adding_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -20,6 +20,8 @@ class AuthController extends GetxController {
   var loading = false.obs;
   final googleSignIn = GoogleSignIn();
 
+  get formKey => null;
+
   signUp() async {
     try {
       loading.value = true;
@@ -28,7 +30,7 @@ class AuthController extends GetxController {
         password: password.text,
       );
       await addUser();
-      Get.to(() => const GenderAddingPage());
+      Get.to(() =>  BottomNavigation());
       loading.value = false;
     } catch (e) {
       handleAuthError(e);
@@ -37,17 +39,21 @@ class AuthController extends GetxController {
     }
   }
 
-  addUser() async {
-    UserModel user = UserModel(
-      username: username.text,
-      email: auth.currentUser?.email,
-    );
+   Future<void> addUser() async {
+    try {
+      UserModel user = UserModel(
+        username: username.text,
+        email: auth.currentUser?.email,
+      );
 
-    await db
-        .collection("users")
-        .doc(auth.currentUser?.uid)
-        .collection("profile")
-        .add(user.toMap());
+      await db
+          .collection("users")
+          .doc(auth.currentUser?.uid)
+          .collection("profile")
+          .add(user.toMap());
+    } catch (e) {
+      ("Error adding user to Firestore: $e");
+    }
   }
 
   signOut() async {
@@ -59,7 +65,7 @@ class AuthController extends GetxController {
       loading.value = true;
       await auth.signInWithEmailAndPassword(
           email: loginemail.text, password: loginPassword.text);
-      Get.to(() => HomeScreen());
+      Get.to(() => BottomNavigation());
       loading.value = false;
     } catch (e) {
       handleAuthError(e);
@@ -100,7 +106,7 @@ class AuthController extends GetxController {
         );
 
         await auth.signInWithCredential(authCredential);
-        Get.to(() => const GenderAddingPage());
+        Get.to(() =>  HomeScreen());
       } else {
         Get.snackbar("Sign In Canceled",
             "The user canceled the Google Sign In process.");
@@ -112,3 +118,4 @@ class AuthController extends GetxController {
     }
   }
 }
+

@@ -70,6 +70,7 @@ class SettingsPage extends StatelessWidget {
               style: TextStyle(color: Colors.red), 
             ),
           ),
+          
         ],
       );
     },
