@@ -1,21 +1,19 @@
-import 'package:dating_app/chat/chat_page.dart';
-import 'package:dating_app/profile/screen/profile_page.dart';
+import 'package:dating_app/screens/chat/screens/chat_page.dart';
+import 'package:dating_app/screens/profile/screen/profile_screen.dart';
 import 'package:dating_app/screens/HomeScreen/home_page.dart';
-import 'package:dating_app/screens/settings/settings_page.dart';
-import 'package:dating_app/user_detailes/user_detail_page.dart';
+import 'package:dating_app/screens/search/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-
 
 class BottomNavigation extends StatelessWidget {
   final RxInt currentIndex = 0.obs;
 
   final List<Widget> _widgetOptions = [
     HomeScreen(),
-     ProfilePage(),
-    const ChatPage(),
-     UserDetails(),
+    SearchScreen(),
+    UserListScreen(),
+    ProfileScreen(),
   ];
 
   @override
@@ -45,17 +43,17 @@ class BottomNavigation extends StatelessWidget {
               ),
             ],
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(left: 35, top: 17),
-              child: IconButton(
-                onPressed: () {
-                  Get.to(const SettingsPage());
-                },
-                icon: const Icon(Icons.settings),
-              ),
-            ),
-          ],
+          // actions: [
+          //   Padding(
+          //     padding: const EdgeInsets.only(left: 35, top: 17),
+          //     child: IconButton(
+          //       onPressed: () {
+          //         Get.to(const SettingsPage());
+          //       },
+          //       icon: const Icon(Icons.settings),
+          //     ),
+          //   ),
+          // ],
         ),
         body: Center(
           child: Obx(() => _widgetOptions[currentIndex.value]),
@@ -75,7 +73,7 @@ class BottomNavigation extends StatelessWidget {
               ),
               iconColor: Colors.white,
             ),
-            GButton(      
+            GButton(
               icon: (Icons.search),
               text: "Search",
               backgroundColor: Colors.white38,
@@ -85,17 +83,17 @@ class BottomNavigation extends StatelessWidget {
               iconColor: Colors.white,
             ),
             GButton(
-              icon: (Icons.person),
-              text: "Profile",
+              icon: (Icons.chat),
+              text: "Chat",
               backgroundColor: Colors.white38,
               textStyle: TextStyle(
                 color: Colors.white,
               ),
               iconColor: Colors.white,
             ),
-             GButton(
-              icon: (Icons.chat),
-              text: "Chat",
+            GButton(
+              icon: (Icons.person),
+              text: "profile",
               backgroundColor: Colors.white38,
               textStyle: TextStyle(
                 color: Colors.white,

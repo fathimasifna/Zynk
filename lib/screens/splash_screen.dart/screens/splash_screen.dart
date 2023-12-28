@@ -1,5 +1,5 @@
 import 'package:dating_app/screens/bottomnavigation/bottomnavigation.dart';
-import 'package:dating_app/screens/on_bodyscreen/start_page.dart';
+import 'package:dating_app/screens/on_bodyscreen/screens/start_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';

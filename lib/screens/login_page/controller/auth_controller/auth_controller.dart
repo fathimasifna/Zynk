@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/screens/HomeScreen/home_page.dart';
 import 'package:dating_app/screens/bottomnavigation/bottomnavigation.dart';
+import 'package:dating_app/screens/login_page/controller/firestore_controller/firestore_controller.dart';
 import 'package:dating_app/screens/login_page/controller/model/model.dart';
 import 'package:dating_app/screens/login_page/screens/signin_page.dart';
+import 'package:dating_app/screens/user_detailes/screens/user_detail_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -30,7 +32,7 @@ class AuthController extends GetxController {
         password: password.text,
       );
       await addUser();
-      Get.to(() =>  BottomNavigation());
+      Get.to(() =>  UserDetailsPage());
       loading.value = false;
     } catch (e) {
       handleAuthError(e);
@@ -57,8 +59,17 @@ class AuthController extends GetxController {
   }
 
   signOut() async {
-    await auth.signOut();
-  }
+  await auth.signOut();
+  clearUserData(); // Clear user-specific data after signing out
+}
+
+void clearUserData() {
+  username.clear();
+  email.clear();
+  password.clear();
+  // Add other controllers you want to clear here
+}
+
 
   signIn() async {
     try {

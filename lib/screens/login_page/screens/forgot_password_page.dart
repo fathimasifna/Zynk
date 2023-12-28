@@ -8,7 +8,7 @@ class ForgotPasswordPage extends StatefulWidget {
   @override
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
-  
+
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final controller = Get.put(AuthController());
 

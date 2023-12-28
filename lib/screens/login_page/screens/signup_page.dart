@@ -162,6 +162,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         onPressed: () async {
                           await controller.signUp();
                           addData();
+                              controller.clearUserData(); 
+
                         },
                         style: ButtonStyle(
                           backgroundColor:

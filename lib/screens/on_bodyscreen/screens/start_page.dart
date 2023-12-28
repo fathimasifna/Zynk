@@ -1,5 +1,6 @@
 import 'package:dating_app/screens/login_page/screens/signin_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class BodyScreen extends StatefulWidget {
   const BodyScreen({Key? key}) : super(key: key);
@@ -100,10 +101,7 @@ class _BodyScreenState extends State<BodyScreen> {
       children: [
         ElevatedButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const SignIn()),
-            );
+           Get.to(SignIn());
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.black12,
