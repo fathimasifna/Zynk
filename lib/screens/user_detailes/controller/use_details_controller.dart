@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dating_app/screens/HomeScreen/screen/home_screen_add_details.dart';
 import 'package:dating_app/screens/bottomnavigation/bottomnavigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -48,12 +49,12 @@ class UserDetailsController extends GetxController {
       print('Error saving user data: $error');
     }
   }
-
+  
   Future save() async {
     try {
       loading.value = true;
 
-      Get.to(() => BottomNavigation());
+      Get.to(() => HomePageAddDetails());
       loading.value = false;
     } catch (e) {
       print('Error in save method: $e');

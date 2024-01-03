@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 class UserDetailsPage extends StatelessWidget {
   final UserDetailsController controller = Get.put(UserDetailsController());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   UserDetailsPage({Key? key}) : super(key: key);
 
   @override

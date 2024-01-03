@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dating_app/screens/HomeScreen/home_page.dart';
+import 'package:dating_app/screens/HomeScreen/screen/home_page.dart';
 import 'package:dating_app/screens/bottomnavigation/bottomnavigation.dart';
-import 'package:dating_app/screens/login_page/controller/firestore_controller/firestore_controller.dart';
 import 'package:dating_app/screens/login_page/controller/model/model.dart';
 import 'package:dating_app/screens/login_page/screens/signin_page.dart';
 import 'package:dating_app/screens/user_detailes/screens/user_detail_page.dart';
@@ -22,6 +21,26 @@ class AuthController extends GetxController {
   var loading = false.obs;
   final googleSignIn = GoogleSignIn();
 
+  Future<UserModel?> getUserInfo() async {
+    try {
+      var snapshot = await db
+          .collection("users")
+          .doc(auth.currentUser?.uid)
+          .collection("profile")
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        var data = snapshot.docs.first.data() as Map<String, dynamic>;
+        return UserModel(username: data['username'], email: data['email']);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      Get.snackbar("Error", "Failed to fetch user information: $e");
+      return null;
+    }
+  }
+
   get formKey => null;
 
   signUp() async {
@@ -32,7 +51,7 @@ class AuthController extends GetxController {
         password: password.text,
       );
       await addUser();
-      Get.to(() =>  UserDetailsPage());
+      Get.to(() => UserDetailsPage());
       loading.value = false;
     } catch (e) {
       handleAuthError(e);
@@ -41,7 +60,7 @@ class AuthController extends GetxController {
     }
   }
 
-   Future<void> addUser() async {
+  Future<void> addUser() async {
     try {
       UserModel user = UserModel(
         username: username.text,
@@ -59,17 +78,15 @@ class AuthController extends GetxController {
   }
 
   signOut() async {
-  await auth.signOut();
-  clearUserData(); // Clear user-specific data after signing out
-}
+    await auth.signOut();
+    clearUserData();
+  }
 
-void clearUserData() {
-  username.clear();
-  email.clear();
-  password.clear();
-  // Add other controllers you want to clear here
-}
-
+  void clearUserData() {
+    username.clear();
+    email.clear();
+    password.clear();
+  }
 
   signIn() async {
     try {
@@ -117,7 +134,7 @@ void clearUserData() {
         );
 
         await auth.signInWithCredential(authCredential);
-        Get.to(() =>  HomeScreen());
+        Get.to(() => HomeScreen());
       } else {
         Get.snackbar("Sign In Canceled",
             "The user canceled the Google Sign In process.");
@@ -129,4 +146,3 @@ void clearUserData() {
     }
   }
 }
-

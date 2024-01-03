@@ -1,20 +1,26 @@
-import 'dart:io';
-
+import 'package:dating_app/screens/login_page/controller/auth_controller/auth_controller.dart';
+import 'package:dating_app/screens/login_page/controller/model/model.dart';
 import 'package:dating_app/screens/on_bodyscreen/screens/start_page.dart';
 import 'package:dating_app/screens/profile/controller/profile_controller.dart';
 import 'package:dating_app/screens/profile/costomwidget/costom_widget.dart';
 import 'package:dating_app/screens/profile/screen/more_details_about_user.dart';
-import 'package:dating_app/screens/login_page/controller/auth_controller/auth_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
 class ProfileScreen extends StatelessWidget {
-  ProfileScreen({super.key});
-  final ProfileController imagecontroller = Get.put(ProfileController());
-  final controller = Get.put(AuthController());
+  final ProfileController imageController = Get.put(ProfileController());
+  final AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      // Listen for profile changes
+      imageController.listenToProfileChanges(user.uid);
+    }
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
@@ -22,61 +28,72 @@ class ProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Obx(() => Stack(
-                    children: [
-                      Center(
-                        child: CircleAvatar(
-                          radius: 70,
-                          backgroundColor: Colors.white38,
-                          backgroundImage:
-                              imagecontroller.profileImage.value.isNotEmpty
-                                  ? FileImage(
-                                      File(imagecontroller.profileImage.value))
-                                  : null,
+              Stack(
+                children: [
+                  Center(
+                    child: ClipOval(
+                      child: Container(
+                        width: 140,
+                        height: 140,
+                        color: Colors.white38,
+                        child: _buildProfileImage(),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 55,
+                    right: 100,
+                    child: Container(
+                      width: 35,
+                      height: 35,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: Colors.white,
+                      ),
+                      child: IconButton(
+                        onPressed: () => imageController.pickImage(),
+                        icon: const Icon(
+                          Icons.edit,
+                          color: Colors.black,
                         ),
                       ),
-                      Positioned(
-                        bottom: 5,
-                        right: 90,
-                        child: Container(
-                          width: 35,
-                          height: 35,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: Colors.white),
-                          child: IconButton(
-                            onPressed: () => imagecontroller.pickImage(),
-                            icon: const Icon(
-                              Icons.edit,
-                              color: Colors.black,
-                            ),
+                    ),
+                  ),
+                  FutureBuilder<UserModel?>(
+                    future: authController.getUserInfo(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text("Error: ${snapshot.error}");
+                      } else if (snapshot.hasData && snapshot.data != null) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 160, left: 135),
+                          child: Text(
+                            snapshot.data!.username ?? "Default Username",
+                            style: const TextStyle(fontSize: 30, color: Colors.white),
                           ),
-                        ),
-                      )
-                    ],
-                  )),
-              const SizedBox(height: 16),
-              const Text(
-                "data",
-                style: TextStyle(fontSize: 30, color: Colors.white),
+                        );
+                      } else {
+                        return const Text("No user data found");
+                      }
+                    },
+                  ),
+                ],
               ),
-             
-              // ElevatedButton(
-              //     onPressed: () {
-              //       Get.to(AddMoreDetails());
-              //     },
-              //     child: Text(" Add More Details")),
+              const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.only(left: 100),
                 child: GestureDetector(
                   child: Row(
                     children: [
-                      const Text(" More details",style:TextStyle(color: Colors.white) ,),
+                      const Text(" More details", style: TextStyle(color: Colors.white)),
                       IconButton(
-                          onPressed: () {
-                            Get.to(AddMoreDetails());
-                          },
-                          icon: const Icon(Icons.edit,color: Colors.white,)),
+                        onPressed: () {
+                          Get.to(MoreDetails());
+                        },
+                        icon: const Icon(Icons.edit, color: Colors.white),
+                      ),
                     ],
                   ),
                 ),
@@ -88,7 +105,7 @@ class ProfileScreen extends StatelessWidget {
                 title: "Settings",
                 icon: Icons.settings,
                 onPress: () {
-                //  Get.to();
+                  // Navigate to settings screen
                 },
                 endicon: false,
                 textcolor: Colors.white,
@@ -114,6 +131,17 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildProfileImage() {
+    if (imageController.profileImage.value.isNotEmpty) {
+      return Image.network(
+        imageController.profileImage.value,
+        fit: BoxFit.cover,
+      );
+    } else {
+      return const CircularProgressIndicator();
+    }
+  }
+
   void _showLogoutConfirmationDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -130,7 +158,8 @@ class ProfileScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () async {
-                await Get.offAll(() =>  const BodyScreen());
+                await authController.signOut();
+                await Get.offAll(() => const BodyScreen());
               },
               child: const Text(
                 "Log Out",
