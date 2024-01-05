@@ -12,8 +12,6 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final controller = Get.put(AuthController());
- 
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
 
@@ -27,7 +25,10 @@ class _SignUpPageState extends State<SignUpPage> {
         title: const Text(
           "Sign Up",
           style: TextStyle(
-              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -160,10 +161,11 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       child: ElevatedButton(
                         onPressed: () async {
-                          await controller.signUp();
-                          addData();
-                              controller.clearUserData(); 
-
+                          if (_formKey.currentState?.validate() ?? false) {
+                            await controller.signUp();
+                            addData();
+                            controller.clearUserData();
+                          }
                         },
                         style: ButtonStyle(
                           backgroundColor:

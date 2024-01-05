@@ -6,14 +6,18 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+
+
+
 class ProfileController extends GetxController {
-  var profileImage = ''.obs; 
+  var profileImage = ''.obs;
 
   Future<void> pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      profileImage.value = pickedFile.path ?? '';
+      profileImage.value = pickedFile.path;
       await _uploadImageToFirebaseStorage(profileImage.value);
     }
   }
@@ -23,24 +27,27 @@ class ProfileController extends GetxController {
       final user = FirebaseAuth.instance.currentUser;
       final String uid = user?.uid ?? '';
       String fileName = 'profile_image_$uid.jpg';
-      Reference storageReference = FirebaseStorage.instance.ref().child('profile_images/$fileName');
+      Reference storageReference =
+          FirebaseStorage.instance.ref().child('profile_images/$fileName');
       UploadTask uploadTask = storageReference.putFile(File(filePath));
       await uploadTask.whenComplete(() => null);
 
-      // Get the download URL of the uploaded image
       String imageUrl = await storageReference.getDownloadURL();
 
-      // Update the profile image URL in Firestore
       await FirebaseFirestore.instance.collection('users').doc(uid).update({
         'profileImage': imageUrl,
       });
     } catch (e) {
-      print('Error uploading image to Firestore: $e');
+      ('Error uploading image to Firestore: $e');
     }
   }
 
   void listenToProfileChanges(String uid) {
-    FirebaseFirestore.instance.collection('users').doc(uid).snapshots().listen((snapshot) {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .snapshots()
+        .listen((snapshot) {
       if (snapshot.exists) {
         final data = snapshot.data();
         if (data != null && data.containsKey('profileImage')) {

@@ -1,4 +1,3 @@
-// more_details.dart
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/screens/user_detailes/controller/use_details_controller.dart';
@@ -9,6 +8,8 @@ import 'package:get/get.dart';
 
 class MoreDetails extends StatelessWidget {
   final UserDetailsController controller = Get.put(UserDetailsController());
+
+   MoreDetails({super.key});
 
   @override
   Widget build(BuildContext context) {

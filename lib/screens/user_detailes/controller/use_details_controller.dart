@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/screens/HomeScreen/screen/home_screen_add_details.dart';
-import 'package:dating_app/screens/bottomnavigation/bottomnavigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,7 +45,7 @@ class UserDetailsController extends GetxController {
         'bio': bio,
       });
     } catch (error) {
-      print('Error saving user data: $error');
+      ('Error saving user data: $error');
     }
   }
   
@@ -57,7 +56,7 @@ class UserDetailsController extends GetxController {
       Get.to(() => HomePageAddDetails());
       loading.value = false;
     } catch (e) {
-      print('Error in save method: $e');
+      ('Error in save method: $e');
     } finally {
       loading.value = false;
     }

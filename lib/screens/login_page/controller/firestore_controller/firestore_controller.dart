@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 final controller = Get.put(AuthController());
 
 void addData() async {
-  print("Adding data to Firestore");
-  print("Username: ${controller.username.text}");
-  print("Email: ${controller.email.text}");
+  ("Adding data to Firestore");
+  ("Username: ${controller.username.text}");
+  ("Email: ${controller.email.text}");
 
   User? user = FirebaseAuth.instance.currentUser;
 
@@ -18,11 +18,11 @@ void addData() async {
         "name": controller.username.text,
         "mail-id": controller.email.text,
       });
-      print("Data added successfully!");
+      ("Data added successfully!");
     } catch (error) {
-      print("Error adding data: $error");
+      ("Error adding data: $error");
     }
   } else {
-    print("User is not authenticated.");
+    ("User is not authenticated.");
   }
 }

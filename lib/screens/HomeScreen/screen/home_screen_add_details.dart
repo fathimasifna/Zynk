@@ -79,6 +79,84 @@ class HomePageAddDetails extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
+                const Text(
+                  "Add 2 images",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+                 Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Row(
+          children: [
+            Obx(() {
+              return Container(
+                height: 180,
+                width: 120,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                  image: controller.image1.value.path.isNotEmpty
+                      ? DecorationImage(
+                          image: FileImage(controller.image1.value),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+                ),
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: IconButton(
+                        onPressed: () async {
+                          await controller.imagePicker(1);
+                        },
+                        icon: const Icon(Icons.add_circle),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
+            const SizedBox(width: 25),
+            Obx(() {
+              return Container(
+                height: 180,
+                width: 120,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                  image: controller.image2.value.path.isNotEmpty
+                      ? DecorationImage(
+                          image: FileImage(controller.image2.value),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+                ),
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: IconButton(
+                        onPressed: () async {
+                          await controller.imagePicker(2);
+                        },
+                        icon: const Icon(Icons.add_circle),
+                      ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                      const SizedBox(width: 25),
+                      
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState?.validate() ?? false) {

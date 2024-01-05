@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dating_app/screens/HomeScreen/screen/home_page.dart';
 import 'package:dating_app/screens/bottomnavigation/bottomnavigation.dart';
 import 'package:dating_app/screens/login_page/controller/model/model.dart';
 import 'package:dating_app/screens/login_page/screens/signin_page.dart';
@@ -30,7 +29,7 @@ class AuthController extends GetxController {
           .get();
 
       if (snapshot.docs.isNotEmpty) {
-        var data = snapshot.docs.first.data() as Map<String, dynamic>;
+        var data = snapshot.docs.first.data();
         return UserModel(username: data['username'], email: data['email']);
       } else {
         return null;
@@ -119,30 +118,30 @@ class AuthController extends GetxController {
     Get.snackbar("Error", "$error");
   }
 
-  signInWithGoogle() async {
-    try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await googleSignIn.signIn();
+  // signInWithGoogle() async {
+  //   try {
+  //     final GoogleSignInAccount? googleSignInAccount =
+  //         await googleSignIn.signIn();
 
-      if (googleSignInAccount != null) {
-        final GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount.authentication;
+  //     if (googleSignInAccount != null) {
+  //       final GoogleSignInAuthentication googleSignInAuthentication =
+  //           await googleSignInAccount.authentication;
 
-        final AuthCredential authCredential = GoogleAuthProvider.credential(
-          accessToken: googleSignInAuthentication.accessToken,
-          idToken: googleSignInAuthentication.idToken,
-        );
+  //       final AuthCredential authCredential = GoogleAuthProvider.credential(
+  //         accessToken: googleSignInAuthentication.accessToken,
+  //         idToken: googleSignInAuthentication.idToken,
+  //       );
 
-        await auth.signInWithCredential(authCredential);
-        Get.to(() => HomeScreen());
-      } else {
-        Get.snackbar("Sign In Canceled",
-            "The user canceled the Google Sign In process.");
-      }
-    } on FirebaseAuthException catch (e) {
-      Get.snackbar("Error", "$e");
-    } catch (e) {
-      Get.snackbar("Error", "An unexpected error occurred: $e");
-    }
-  }
+  //       await auth.signInWithCredential(authCredential);
+  //       Get.to(() => const HomeScreen());
+  //     } else {
+  //       Get.snackbar("Sign In Canceled",
+  //           "The user canceled the Google Sign In process.");
+  //     }
+  //   } on FirebaseAuthException catch (e) {
+  //     Get.snackbar("Error", "$e");
+  //   } catch (e) {
+  //     Get.snackbar("Error", "An unexpected error occurred: $e");
+  //   }
+  // }
 }

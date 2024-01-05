@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ProfileMenuWidget extends StatelessWidget {
-  const ProfileMenuWidget({
+class HomePageMenuWidget extends StatelessWidget {
+  const HomePageMenuWidget({
     Key? key,
     required this.title,
     required this.icon,
@@ -36,7 +36,7 @@ final String title;
       ),
       title: Text(
         title,
-        style: TextStyle(color: textcolor),
+        style: TextStyle(color: textcolor,fontSize: 18,fontWeight: FontWeight.bold),
       ),
       trailing: endicon
           ? Container(
@@ -47,7 +47,7 @@ final String title;
               width: 40,
               height: 40,
               child: const Icon(
-                Icons.arrow_forward_ios,
+                Icons.share,
                 color: Colors.black,
               ),
             )

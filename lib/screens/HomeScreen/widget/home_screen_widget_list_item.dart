@@ -26,9 +26,18 @@ class HomePageListItems extends StatelessWidget {
               margin: const EdgeInsets.only(right: 8.0),
               width: isLandscape ? screenWidth * 0.8 : 200,
               height: isLandscape ? screenHeight * 0.8 : 250,
-              child: Image.asset(
-                "assets/images/profile.png",
-                fit: BoxFit.cover,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(60),
+                color: Colors.black,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Image.asset(
+                  photoIndex == 0
+                      ? "assets/images/photo2.png"
+                      : "assets/images/photo.png",
+                  fit: BoxFit.cover,
+                ),
               ),
             );
           },

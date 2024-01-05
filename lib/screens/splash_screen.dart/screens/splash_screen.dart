@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class SplashScreen extends StatefulWidget {
+  // ignore: use_key_in_widget_constructors
   const SplashScreen({Key? key});
 
   @override

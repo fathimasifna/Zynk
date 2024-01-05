@@ -4,20 +4,21 @@ import 'package:dating_app/screens/on_bodyscreen/screens/start_page.dart';
 import 'package:dating_app/screens/profile/controller/profile_controller.dart';
 import 'package:dating_app/screens/profile/costomwidget/costom_widget.dart';
 import 'package:dating_app/screens/profile/screen/more_details_about_user.dart';
+import 'package:dating_app/settings/screens/settings_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 
 class ProfileScreen extends StatelessWidget {
   final ProfileController imageController = Get.put(ProfileController());
   final AuthController authController = Get.put(AuthController());
 
+  ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      // Listen for profile changes
       imageController.listenToProfileChanges(user.uid);
     }
 
@@ -48,7 +49,7 @@ class ProfileScreen extends StatelessWidget {
                       height: 35,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
-                        color: Colors.white,
+                        color: const Color.fromARGB(255, 172, 84, 113),
                       ),
                       child: IconButton(
                         onPressed: () => imageController.pickImage(),
@@ -71,7 +72,8 @@ class ProfileScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 160, left: 135),
                           child: Text(
                             snapshot.data!.username ?? "Default Username",
-                            style: const TextStyle(fontSize: 30, color: Colors.white),
+                            style: const TextStyle(
+                                fontSize: 30, color: Colors.white),
                           ),
                         );
                       } else {
@@ -82,18 +84,20 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16),
+              const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.only(left: 100),
                 child: GestureDetector(
-                  child: Row(
+                  onTap: () {
+                    Get.to(MoreDetails());
+                  },
+                  child: const Row(
                     children: [
-                      const Text(" More details", style: TextStyle(color: Colors.white)),
-                      IconButton(
-                        onPressed: () {
-                          Get.to(MoreDetails());
-                        },
-                        icon: const Icon(Icons.edit, color: Colors.white),
-                      ),
+                      Text(" More Details",
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),
@@ -105,7 +109,7 @@ class ProfileScreen extends StatelessWidget {
                 title: "Settings",
                 icon: Icons.settings,
                 onPress: () {
-                  // Navigate to settings screen
+                  Get.to(() => const SettingsScreen());
                 },
                 endicon: false,
                 textcolor: Colors.white,
@@ -132,14 +136,51 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _buildProfileImage() {
-    if (imageController.profileImage.value.isNotEmpty) {
-      return Image.network(
-        imageController.profileImage.value,
-        fit: BoxFit.cover,
-      );
-    } else {
-      return const CircularProgressIndicator();
-    }
+    return FutureBuilder<UserModel?>(
+      future: authController.getUserInfo(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          return Text("Error: ${snapshot.error}");
+        } else if (snapshot.hasData && snapshot.data != null) {
+          if (imageController.profileImage.value.isNotEmpty) {
+            return Image.network(
+              imageController.profileImage.value,
+              fit: BoxFit.cover,
+            );
+          } else {
+            return Container(
+              width: 140,
+              height: 140,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white38,
+              ),
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.person,
+                    size: 60,
+                    color: Colors.black,
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "No Image",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ],
+              ),
+            );
+          }
+        } else {
+          return const Text("No user data found");
+        }
+      },
+    );
   }
 
   void _showLogoutConfirmationDialog(BuildContext context) {

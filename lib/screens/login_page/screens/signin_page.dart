@@ -3,7 +3,6 @@ import 'package:dating_app/screens/login_page/screens/forgot_password_page.dart'
 import 'package:dating_app/screens/login_page/screens/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sign_in_button/sign_in_button.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -141,7 +140,9 @@ class _LoginPageState extends State<SignIn> {
                       ),
                       child: ElevatedButton(
                         onPressed: () {
-                          controller.signIn();
+                          if (_formKey.currentState?.validate() ?? false) {
+                            controller.signIn();
+                          }
                         },
                         style: ButtonStyle(
                           backgroundColor:
@@ -173,13 +174,13 @@ class _LoginPageState extends State<SignIn> {
                   ),
                   const SizedBox(height: 20),
                   signUpOption(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SignInButton(Buttons.google, onPressed: ()async {
-                    controller.signInWithGoogle();
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
+                  // SignInButton(Buttons.google, onPressed: ()async {
+                  //   controller.signInWithGoogle();
 
-                  })
+                  // })
                 ],
               ),
             ),
