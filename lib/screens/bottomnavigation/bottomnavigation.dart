@@ -1,5 +1,5 @@
 import 'package:dating_app/screens/chat/screens/user_list_screen.dart';
-import 'package:dating_app/screens/profile/screen/profile_screen.dart';
+import 'package:dating_app/screens/current%20user%20profile/screen/profile_screen_current_user.dart';
 import 'package:dating_app/screens/HomeScreen/screen/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +10,7 @@ class BottomNavigation extends StatelessWidget {
 
   final List<Widget> _widgetOptions = [
     const HomeScreen(),
-    UserListScreen(),
+     UserListScreen(),
     ProfileScreen(),
   ];
 
@@ -73,6 +73,7 @@ class BottomNavigation extends StatelessWidget {
               ),
               iconColor: Colors.white,
             ),
+            
             GButton(
               icon: (Icons.chat),
               text: "Chat",

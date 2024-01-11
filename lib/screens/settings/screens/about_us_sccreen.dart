@@ -82,7 +82,7 @@ class AboutScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 Text(
-                  "Have questions, suggestions, or just want to say hello? We'd love to hear from you! Reach out to us at [contact@email.com] or through our in-app support.F",
+                  "Have questions, suggestions, or just want to say hello? We'd love to hear from you! Reach out to us at [contact@email.com] or through our in-app support.",
                   style: TextStyle(
                     color: Colors.white,
                   ),

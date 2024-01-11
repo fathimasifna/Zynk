@@ -1,6 +1,6 @@
-import 'package:dating_app/settings/costom_widget/costom_widget.dart';
-import 'package:dating_app/settings/screens/Privacy_Policy_screen.dart';
-import 'package:dating_app/settings/screens/about_us_sccreen.dart';
+import 'package:dating_app/screens/settings/costom_widget/costom_widget.dart';
+import 'package:dating_app/screens/settings/screens/Privacy_Policy_screen.dart';
+import 'package:dating_app/screens/settings/screens/about_us_sccreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,16 +1,15 @@
+import 'package:dating_app/screens/favourite/favourite_screen.dart';
 import 'package:dating_app/screens/login_page/controller/auth_controller/auth_controller.dart';
-import 'package:dating_app/screens/login_page/controller/model/model.dart';
+import 'package:dating_app/model/model.dart';
 import 'package:dating_app/screens/on_bodyscreen/screens/start_page.dart';
-import 'package:dating_app/screens/profile/controller/profile_controller.dart';
-import 'package:dating_app/screens/profile/costomwidget/costom_widget.dart';
-import 'package:dating_app/screens/profile/screen/more_details_about_user.dart';
-import 'package:dating_app/settings/screens/settings_screen.dart';
+import 'package:dating_app/screens/current%20user%20profile/costomwidget/costom_widget.dart';
+import 'package:dating_app/screens/current%20user%20profile/screen/more_details_about_user.dart';
+import 'package:dating_app/screens/settings/screens/settings_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
-  final ProfileController imageController = Get.put(ProfileController());
   final AuthController authController = Get.put(AuthController());
 
   ProfileScreen({super.key});
@@ -19,7 +18,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      imageController.listenToProfileChanges(user.uid);
+      authController.listenToProfileChanges(user.uid);
     }
 
     return Scaffold(
@@ -52,7 +51,7 @@ class ProfileScreen extends StatelessWidget {
                         color: const Color.fromARGB(255, 172, 84, 113),
                       ),
                       child: IconButton(
-                        onPressed: () => imageController.pickImage(),
+                        onPressed: () => authController.pickImage(),
                         icon: const Icon(
                           Icons.edit,
                           color: Colors.black,
@@ -106,6 +105,17 @@ class ProfileScreen extends StatelessWidget {
               const Divider(),
               const SizedBox(height: 20),
               ProfileMenuWidget(
+                  title: "Favourite",
+                  icon: Icons.favorite,
+                  onPress: () {
+                    Get.to(() => const FavouriteScreen());
+                  },
+                  endicon: false,
+                  textcolor: Colors.white,
+                  startcolor: const Color.fromARGB(255, 132, 13, 52),
+                  endcolor: Colors.white),
+              const SizedBox(height: 15),
+              ProfileMenuWidget(
                 title: "Settings",
                 icon: Icons.settings,
                 onPress: () {
@@ -146,9 +156,9 @@ class ProfileScreen extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Text("Error: ${snapshot.error}");
         } else if (snapshot.hasData && snapshot.data != null) {
-          if (imageController.profileImage.value.isNotEmpty) {
+          if (authController.profileImage.value.isNotEmpty) {
             return Image.network(
-              imageController.profileImage.value,
+              authController.profileImage.value,
               fit: BoxFit.cover,
             );
           } else {
@@ -193,12 +203,13 @@ class ProfileScreen extends StatelessWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                //   Navigator.of(context).pop();
+                Get.back();
               },
               child: const Text("Cancel"),
             ),
             TextButton(
-              onPressed: () async {
+              onPressed: () async { 
                 await authController.signOut();
                 await Get.offAll(() => const BodyScreen());
               },

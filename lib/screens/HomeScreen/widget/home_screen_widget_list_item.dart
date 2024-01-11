@@ -1,12 +1,19 @@
-import 'package:dating_app/screens/HomeScreen/widget/home_page_action_buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:dating_app/screens/HomeScreen/widget/home_page_action_buttons.dart';
 
 class HomePageListItems extends StatelessWidget {
   final int index;
+  final String about;
+  final String interest;
+  final List<String> imageUrls;
+  
 
   const HomePageListItems({
     Key? key,
     required this.index,
+    required this.about,
+    required this.interest,
+    required this.imageUrls,
   }) : super(key: key);
 
   @override
@@ -17,10 +24,11 @@ class HomePageListItems extends StatelessWidget {
     final isLandscape = screenWidth > screenHeight;
 
     return Stack(
+
       children: [
         PageView.builder(
           scrollDirection: isLandscape ? Axis.vertical : Axis.horizontal,
-          itemCount: 2,
+          itemCount: imageUrls.length,
           itemBuilder: (BuildContext context, int photoIndex) {
             return Container(
               margin: const EdgeInsets.only(right: 8.0),
@@ -32,10 +40,8 @@ class HomePageListItems extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
-                child: Image.asset(
-                  photoIndex == 0
-                      ? "assets/images/photo2.png"
-                      : "assets/images/photo.png",
+                child: Image.network(
+                  imageUrls[photoIndex],
                   fit: BoxFit.cover,
                 ),
               ),
@@ -52,30 +58,22 @@ class HomePageListItems extends StatelessWidget {
               left: isLandscape ? screenWidth * 0.05 : 17,
             ),
             color: Colors.black.withOpacity(0.3),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
+                
                 Text(
-                  "Name",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 20.0),
-                Text(
-                  "About",
-                  style: TextStyle(
+                  about,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 28.0,
                   ),
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 Text(
-                  "Interest",
-                  style: TextStyle(
+                  interest,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 28.0,
                   ),
@@ -84,30 +82,39 @@ class HomePageListItems extends StatelessWidget {
             ),
           ),
         ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Padding(
-            padding: EdgeInsets.all(isLandscape ? 8.0 : 16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.white,
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                HomePageActionButtons(
-                  iconButton: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.favorite_border),
-                  ),
-                ),
-              ],
+      Align(
+  alignment: Alignment.centerRight,
+  child: Padding(
+    padding: EdgeInsets.all(isLandscape ? 8.0 : 16.0),
+    child: GestureDetector(
+      onTap: () {
+       // Get.to(Profiles(user:,));
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const CircleAvatar(
+            radius: 30,
+            backgroundColor: Colors.white,
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          HomePageActionButtons(
+            iconButton: IconButton(
+              onPressed: () {
+
+               // Get.to(const FavouriteScreen());
+              },
+              icon: const Icon(Icons.favorite_border),
             ),
           ),
-        ),
+        ],
+      ),
+    ),
+  ),
+),
+
       ],
     );
   }

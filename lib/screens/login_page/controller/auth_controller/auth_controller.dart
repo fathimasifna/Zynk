@@ -1,12 +1,16 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/screens/bottomnavigation/bottomnavigation.dart';
-import 'package:dating_app/screens/login_page/controller/model/model.dart';
+import 'package:dating_app/model/model.dart';
 import 'package:dating_app/screens/login_page/screens/signin_page.dart';
 import 'package:dating_app/screens/user_detailes/screens/user_detail_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AuthController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -19,6 +23,18 @@ class AuthController extends GetxController {
   TextEditingController loginPassword = TextEditingController();
   var loading = false.obs;
   final googleSignIn = GoogleSignIn();
+    var profileImage = ''.obs;
+
+  Future<void> pickImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      profileImage.value = pickedFile.path;
+      await _uploadImageToFirebaseStorage(profileImage.value);
+    }
+  }
+
 
   Future<UserModel?> getUserInfo() async {
     try {
@@ -144,4 +160,38 @@ class AuthController extends GetxController {
   //     Get.snackbar("Error", "An unexpected error occurred: $e");
   //   }
   // }
+   Future<void> _uploadImageToFirebaseStorage(String filePath) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      final String uid = user?.uid ?? '';
+      String fileName = 'profile_image_$uid.jpg';
+      Reference storageReference =
+          FirebaseStorage.instance.ref().child('profile_images/$fileName');
+      UploadTask uploadTask = storageReference.putFile(File(filePath));
+      await uploadTask.whenComplete(() => null);
+
+      String imageUrl = await storageReference.getDownloadURL();
+
+      await FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'profileImage': imageUrl,
+      });
+    } catch (e) {
+      ('Error uploading image to Firestore: $e');
+    }
+  }
+
+  void listenToProfileChanges(String uid) {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .snapshots()
+        .listen((snapshot) {
+      if (snapshot.exists) {
+        final data = snapshot.data();
+        if (data != null && data.containsKey('profileImage')) {
+          profileImage.value = data['profileImage'];
+        }
+      }
+    });
+  }
 }

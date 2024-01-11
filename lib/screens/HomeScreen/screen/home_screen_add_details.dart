@@ -86,71 +86,70 @@ class HomePageAddDetails extends StatelessWidget {
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
-                 Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Row(
-          children: [
-            Obx(() {
-              return Container(
-                height: 180,
-                width: 120,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                  image: controller.image1.value.path.isNotEmpty
-                      ? DecorationImage(
-                          image: FileImage(controller.image1.value),
-                          fit: BoxFit.cover,
-                        )
-                      : null,
-                ),
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: IconButton(
-                        onPressed: () async {
-                          await controller.imagePicker(1);
-                        },
-                        icon: const Icon(Icons.add_circle),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }),
-            const SizedBox(width: 25),
-            Obx(() {
-              return Container(
-                height: 180,
-                width: 120,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                  image: controller.image2.value.path.isNotEmpty
-                      ? DecorationImage(
-                          image: FileImage(controller.image2.value),
-                          fit: BoxFit.cover,
-                        )
-                      : null,
-                ),
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: IconButton(
-                        onPressed: () async {
-                          await controller.imagePicker(2);
-                        },
-                        icon: const Icon(Icons.add_circle),
-                      ),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    children: [
+                      Obx(() {
+                        return Container(
+                          height: 180,
+                          width: 120,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                            image: controller.image1.value.path.isNotEmpty
+                                ? DecorationImage(
+                                    image: FileImage(controller.image1.value),
+                                    fit: BoxFit.cover,
+                                  )
+                                : null,
+                          ),
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: IconButton(
+                                  onPressed: () async {
+                                    await controller.imagePicker(1);
+                                  },
+                                  icon: const Icon(Icons.add_circle),
+                                ),
                               ),
                             ],
                           ),
                         );
                       }),
                       const SizedBox(width: 25),
-                      
+                      Obx(() {
+                        return Container(
+                          height: 180,
+                          width: 120,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                            image: controller.image2.value.path.isNotEmpty
+                                ? DecorationImage(
+                                    image: FileImage(controller.image2.value),
+                                    fit: BoxFit.cover,
+                                  )
+                                : null,
+                          ),
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: IconButton(
+                                  onPressed: () async {
+                                    await controller.imagePicker(2);
+                                  },
+                                  icon: const Icon(Icons.add_circle),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                      const SizedBox(width: 25),
                     ],
                   ),
                 ),
@@ -160,11 +159,20 @@ class HomePageAddDetails extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState?.validate() ?? false) {
-                      controller.saveUserData(
-                        about: controller.about.text,
-                        interest: controller.interest.text,
-                      );
-                      controller.save();
+                      if (controller.image1.value.path.isNotEmpty &&
+                          controller.image2.value.path.isNotEmpty) {
+                        controller.saveUserData(
+                          about: controller.about.text,
+                          interest: controller.interest.text,
+                        );
+                        controller.save();
+                      } else {
+                        Get.snackbar(
+                          'Error',
+                          'Please add both images before saving.',
+                          snackPosition: SnackPosition.BOTTOM,
+                        );
+                      }
                     }
                   },
                   style: ElevatedButton.styleFrom(
